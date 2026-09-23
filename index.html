@@ -29,14 +29,11 @@
 
 <!-- ============================================================ HUD -->
 <header class="hud" aria-label="Navegação">
-  <button class="hud-logo" type="button" aria-label="Abrir o índice" aria-expanded="false" aria-controls="toc">
-    <svg viewBox="0 0 100 100" aria-hidden="true">
-      <g class="net-edges"></g><g class="net-nodes"></g>
-    </svg>
+  <button class="hud-menu" type="button" aria-label="Abrir o índice" aria-expanded="false" aria-controls="toc">
+    <span class="burger" aria-hidden="true"><i></i><i></i><i></i></span>
   </button>
   <div class="hud-where" aria-live="polite"><span class="hud-num">00</span><span class="hud-title">Início</span></div>
   <nav class="hud-links">
-    <a href="#comecar">Começar</a>
     <a href="#referencias">Referências</a>
   </nav>
 </header>
@@ -45,7 +42,6 @@
   <div class="toc-inner">
     <p class="mono-label">Índice</p>
     <ol class="toc-list"></ol>
-    <button class="toc-close mono-btn" type="button">Fechar ✕</button>
   </div>
 </div>
 
@@ -153,7 +149,16 @@
     <div class="live-stack" aria-label="Arquitetura do modelo, com o fluxo residual do último token">
       <div class="stk stk-io"><span>Probabilidades</span></div>
       <div class="stk stk-io"><span>Desembedding</span></div>
-      <div class="stk-layers"></div>
+      <div class="stk-layers">
+        <div class="stk-layer"><span>Bloco 8<small>atenção · MLP</small></span><canvas class="stk-strip" data-layer="8"></canvas></div>
+        <div class="stk-layer"><span>Bloco 7<small>atenção · MLP</small></span><canvas class="stk-strip" data-layer="7"></canvas></div>
+        <div class="stk-layer"><span>Bloco 6<small>atenção · MLP</small></span><canvas class="stk-strip" data-layer="6"></canvas></div>
+        <div class="stk-layer"><span>Bloco 5<small>atenção · MLP</small></span><canvas class="stk-strip" data-layer="5"></canvas></div>
+        <div class="stk-layer"><span>Bloco 4<small>atenção · MLP</small></span><canvas class="stk-strip" data-layer="4"></canvas></div>
+        <div class="stk-layer"><span>Bloco 3<small>atenção · MLP</small></span><canvas class="stk-strip" data-layer="3"></canvas></div>
+        <div class="stk-layer"><span>Bloco 2<small>atenção · MLP</small></span><canvas class="stk-strip" data-layer="2"></canvas></div>
+        <div class="stk-layer"><span>Bloco 1<small>atenção · MLP</small></span><canvas class="stk-strip" data-layer="1"></canvas></div>
+      </div>
       <div class="stk stk-io"><span>Embeddings</span><canvas class="stk-strip" data-layer="0"></canvas></div>
       <div class="stk stk-io"><span>Tokenizer</span></div>
     </div>
@@ -414,7 +419,11 @@
   <div class="steer">
     <svg class="gg-bridge" viewBox="0 0 1000 300" aria-hidden="true"></svg>
     <p class="mono-label steer-title">Faça você mesmo · TinyStories-1M, ao vivo, com a direção “ponte” somada na camada 3</p>
-    <div class="steer-prompts" role="radiogroup" aria-label="Começo da história"></div>
+    <div class="steer-prompts" role="group" aria-label="Começo da história">
+      <button type="button" class="mono-btn" aria-pressed="true" data-prompt="Tom wanted to visit his grandma. He">Tom wanted to visit his grandma…</button>
+      <button type="button" class="mono-btn" aria-pressed="false" data-prompt="Once upon a time, there was a little girl named Lily. One day, she">Once upon a time, there was a li…</button>
+      <button type="button" class="mono-btn" aria-pressed="false" data-prompt="Sam and his mom went to the park. They">Sam and his mom went to the park…</button>
+    </div>
     <label class="steer-slider">
       <span class="mono-label">Força</span>
       <input type="range" min="0" max="2.4" step="0.1" value="0" aria-label="Força da direção ponte">

@@ -1,6 +1,6 @@
-// Orquestra a página: textura de papel, HUD (a rede do logo acende conforme a leitura),
+// Orquestra a página: textura de papel, HUD (menu e capítulo atual),
 // índice, e o carregamento preguiçoso de cada capítulo.
-import { rng, svg, reduced } from './lib.js';
+import { rng, reduced } from './lib.js';
 import { load as loadModel } from './model/client.js';
 
 // ---------------------------------------------------------------- grão do papel
@@ -22,18 +22,10 @@ import { load as loadModel } from './model/client.js';
 // ---------------------------------------------------------------- capítulos
 const sections = Array.from(document.querySelectorAll('main > section[data-num]'));
 
-// ---------------------------------------------------------------- logo: a rede de 9 nós da capa
-const NODES = [[14, 34], [42, 16], [42, 44], [74, 50], [42, 64], [14, 76], [42, 86], [80, 84], [74, 24]];
-const EDGES = [[0, 2], [1, 2], [1, 8], [2, 3], [2, 4], [0, 4], [4, 6], [5, 6], [6, 7], [3, 7], [8, 3], [5, 4]];
-const logo = document.querySelector('.hud-logo svg');
-const gE = logo.querySelector('.net-edges'), gN = logo.querySelector('.net-nodes');
-EDGES.forEach(([a, b]) => svg('line', { x1: NODES[a][0], y1: NODES[a][1], x2: NODES[b][0], y2: NODES[b][1] }, gE));
-const nodeEls = NODES.map(([x, y]) => svg('circle', { cx: x, cy: y, r: 7.5 }, gN));
-
-// ---------------------------------------------------------------- índice
+// ---------------------------------------------------------------- índice (o botão de menu vira um X)
 const toc = document.getElementById('toc');
 const tocList = toc.querySelector('.toc-list');
-const logoBtn = document.querySelector('.hud-logo');
+const menuBtn = document.querySelector('.hud-menu');
 sections.forEach(s => {
   const li = document.createElement('li');
   li.innerHTML = `<a href="#${s.id}"><span>${s.dataset.num}</span>${s.dataset.title}</a>`;
@@ -42,12 +34,15 @@ sections.forEach(s => {
 const tocItems = Array.from(tocList.children);
 function setToc(open) {
   toc.hidden = !open;
-  logoBtn.setAttribute('aria-expanded', open);
+  menuBtn.setAttribute('aria-expanded', open);
+  menuBtn.setAttribute('aria-label', open ? 'Fechar o índice' : 'Abrir o índice');
+  document.body.classList.toggle('toc-open', open);
   document.documentElement.style.overflow = open ? 'hidden' : '';
-  if (open) toc.querySelector('a').focus();
+  // o índice é claro: o HUD volta ao tema claro enquanto ele estiver aberto
+  if (open) { document.body.classList.remove('on-dark'); toc.querySelector('a').focus(); }
+  else { where(); menuBtn.focus(); }
 }
-logoBtn.addEventListener('click', () => setToc(toc.hidden));
-toc.querySelector('.toc-close').addEventListener('click', () => setToc(false));
+menuBtn.addEventListener('click', () => setToc(toc.hidden));
 toc.addEventListener('click', e => { if (e.target.closest('a')) setToc(false); });
 addEventListener('keydown', e => { if (e.key === 'Escape' && !toc.hidden) setToc(false); });
 
@@ -66,10 +61,6 @@ function where() {
     const i = sections.indexOf(cur);
     seen.add(i);
     tocItems.forEach((li, k) => li.classList.toggle('seen', seen.has(k)));
-    // os 9 nós acendem conforme a leitura avança; o nó do momento fica laranja
-    const frac = i / (sections.length - 1);
-    const lit = Math.round(frac * NODES.length);
-    nodeEls.forEach((n, k) => { n.classList.toggle('lit', k < lit); n.classList.toggle('now', k === Math.min(NODES.length - 1, lit) && i > 0); });
   }
   // HUD sobre fundo escuro
   let dark = false;
@@ -83,17 +74,47 @@ addEventListener('scroll', () => requestAnimationFrame(where), { passive: true }
 where();
 
 // ---------------------------------------------------------------- carregamento preguiçoso
-const started = new WeakSet();
-const io = new IntersectionObserver(es => es.forEach(e => {
-  if (!e.isIntersecting || started.has(e.target)) return;
-  started.add(e.target);
-  const name = e.target.dataset.module;
-  if (!name || name === 'none') return;
-  import(`./sections/${name}.js`)
-    .then(m => m.default(e.target))
-    .catch(err => console.error(`[${name}]`, err));
-}), { rootMargin: '120% 0px' });
+const started = new Map();
+function initSection(sec) {
+  if (started.has(sec)) return started.get(sec);
+  const name = sec.dataset.module;
+  const p = !name || name === 'none' ? Promise.resolve()
+    : import(`./sections/${name}.js`)
+      .then(m => m.default(sec))
+      .catch(err => console.error(`[${name}]`, err));
+  started.set(sec, p);
+  return p;
+}
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) initSection(e.target); }), { rootMargin: '120% 0px' });
 sections.forEach(s => io.observe(s));
+
+// ---------------------------------------------------------------- saltos para um capítulo
+// Alguns capítulos crescem quando montam seus experimentos. Antes de saltar, monta tudo o
+// que está acima do destino; assim o destino não escorrega para baixo depois do salto.
+const MODEL_CHAPTERS = new Set(['dive', 'live', 'steer']);
+async function jumpTo(id, push = true) {
+  const target = document.getElementById(id);
+  if (!target) return;
+  const upTo = sections.findIndex(s => s === target || s.contains(target));
+  // os capítulos do modelo (8 MB) não entram: têm altura fixa desde o HTML/CSS
+  const pending = sections.slice(0, upTo + 1)
+    .filter(s => !MODEL_CHAPTERS.has(s.dataset.module) || s === sections[upTo])
+    .map(initSection);
+  await Promise.race([Promise.all(pending), new Promise(r => setTimeout(r, 1500))]);
+  await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+  target.scrollIntoView({ block: 'start' });
+  if (push) history.pushState(null, '', `#${id}`);
+}
+document.addEventListener('click', e => {
+  const a = e.target.closest('a[href^="#"]');
+  if (!a || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey) return;
+  const id = decodeURIComponent(a.getAttribute('href').slice(1));
+  if (!id || !document.getElementById(id)) return;
+  e.preventDefault();
+  jumpTo(id);
+});
+addEventListener('popstate', () => { if (location.hash) jumpTo(decodeURIComponent(location.hash.slice(1)), false); });
+if (location.hash) jumpTo(decodeURIComponent(location.hash.slice(1)), false);
 
 // o modelo (8,3 MB) começa a baixar quando o leitor se aproxima dos números;
 // com "economia de dados" ligada, só quando ele chega lá

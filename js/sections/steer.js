@@ -4,11 +4,7 @@
 import { svg, clamp, smooth } from '../lib.js';
 import { load, generate } from '../model/client.js';
 
-const PROMPTS = [
-  'Tom wanted to visit his grandma. He',
-  'Once upon a time, there was a little girl named Lily. One day, she',
-  'Sam and his mom went to the park. They',
-];
+// os começos de história ficam no HTML, nos botões data-prompt do capítulo
 const BRIDGE = /^(bridge\w*|river\w*|hill\w*|road\w*|path\w*|tunnel\w*|mountain\w*|valley\w*|valleys|stream\w*|cliff\w*|across|cross\w*|steep\w*|slope\w*|lake\w*|ocean\w*|rope\w*|mile\w*|climb\w*|upstream\w*|winding|highway\w*)$/i;
 
 function bridgeArt(S) {
@@ -63,14 +59,11 @@ export default function steer(sec) {
   const range = sec.querySelector('input[type=range]'), val = sec.querySelector('.steer-val');
   const pEl = sec.querySelector('.steer-prompt'), gEl = sec.querySelector('.steer-gen');
   const box = sec.querySelector('.steer-prompts');
-  let prompt = PROMPTS[0], deb = 0, ready = false;
+  let prompt = box.querySelector('[aria-pressed="true"]').dataset.prompt, deb = 0, ready = false;
 
-  PROMPTS.forEach((p, i) => {
-    const b = document.createElement('button');
-    b.type = 'button'; b.className = 'mono-btn'; b.textContent = p.length > 34 ? p.slice(0, 32) + '…' : p;
-    b.setAttribute('aria-pressed', i === 0);
-    b.addEventListener('click', () => { prompt = p; box.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b)); run(); });
-    box.append(b);
+  // os botões das histórias já estão no HTML (data-prompt); aqui só ganham o clique
+  box.querySelectorAll('button[data-prompt]').forEach(b => {
+    b.addEventListener('click', () => { prompt = b.dataset.prompt; box.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b)); run(); });
   });
 
   function paint(text) {

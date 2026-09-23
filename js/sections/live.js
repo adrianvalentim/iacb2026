@@ -19,17 +19,9 @@ export default function live(sec) {
   const text = sec.querySelector('.live-text'), toks = sec.querySelector('.live-tokens');
   const top = sec.querySelector('.live-top'), status = sec.querySelector('.live-status');
   const go = sec.querySelector('.live-go'), reset = sec.querySelector('.live-reset');
-  const layersBox = sec.querySelector('.stk-layers');
-  const strips = [sec.querySelector('.stk-strip[data-layer="0"]')];
-  const rows = [];
-  for (let l = 8; l >= 1; l--) {
-    const d = document.createElement('div');
-    d.className = 'stk-layer';
-    d.innerHTML = `<span>Bloco ${l}<small>atenção · MLP</small></span><canvas class="stk-strip" data-layer="${l}"></canvas>`;
-    layersBox.appendChild(d);
-    rows[l] = d;
-    strips[l] = d.querySelector('canvas');
-  }
+  // as camadas já estão no HTML (a altura do capítulo não muda quando ele monta)
+  const strips = [], rows = [];
+  sec.querySelectorAll('.stk-strip').forEach(c => { const l = +c.dataset.layer; strips[l] = c; rows[l] = c.closest('.stk-layer'); });
   strips.forEach(c => { c.width = 256; c.height = 14; });
 
   let promptText = text.textContent, genText = '', busy = false, req = 0, preset = 0;

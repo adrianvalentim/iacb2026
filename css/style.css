@@ -114,14 +114,26 @@ em { font-style: normal; }
   transition: background .4s;
 }
 body.on-dark .hud::before { background: linear-gradient(color-mix(in srgb, var(--ink) 90%, transparent) 55%, transparent); }
-.hud-logo {
-  width: 42px; height: 42px; padding: 0; border: 0; background: transparent; cursor: pointer;
+/* menu: três traços que viram um X quando o índice está aberto */
+.hud-menu {
+  width: 40px; height: 40px; padding: 0; cursor: pointer; display: grid; place-items: center;
+  border: 1px solid var(--ink); background: color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter: blur(6px); transition: background .2s, border-color .2s;
 }
-.hud-logo svg { width: 100%; height: 100%; overflow: visible; }
-.net-edges line { stroke: var(--ink); stroke-width: 2.6; transition: stroke .6s; }
-.net-nodes circle { fill: var(--paper); stroke: var(--ink); stroke-width: 3; transition: fill .6s var(--ease), r .4s var(--ease); }
-.net-nodes circle.lit { fill: var(--ink); }
-.net-nodes circle.now { fill: var(--accent); stroke: var(--accent); }
+.burger { position: relative; width: 18px; height: 12px; display: block; }
+.burger i {
+  position: absolute; left: 0; right: 0; height: 2px; background: var(--ink);
+  transition: transform .35s var(--ease), opacity .2s, top .35s var(--ease), background .2s;
+}
+.burger i:nth-child(1) { top: 0; }
+.burger i:nth-child(2) { top: 5px; }
+.burger i:nth-child(3) { top: 10px; }
+.hud-menu:hover { background: var(--ink); }
+.hud-menu:hover .burger i { background: var(--paper); }
+.hud-menu[aria-expanded="true"] .burger i:nth-child(1) { top: 5px; transform: rotate(45deg); }
+.hud-menu[aria-expanded="true"] .burger i:nth-child(2) { opacity: 0; }
+.hud-menu[aria-expanded="true"] .burger i:nth-child(3) { top: 5px; transform: rotate(-45deg); }
+body.toc-open .hud { z-index: 160; }
 .hud-where {
   display: flex; gap: 10px; align-items: baseline; font-family: var(--f-mono); font-size: 11px;
   letter-spacing: .09em; text-transform: uppercase; color: var(--ink);
@@ -138,10 +150,10 @@ body.on-dark .hud::before { background: linear-gradient(color-mix(in srgb, var(-
 .hud-links a:hover { background: var(--ink); color: var(--paper); }
 body.on-dark .hud-where { background: color-mix(in srgb, var(--ink) 70%, transparent); color: var(--paper); }
 body.on-dark .hud-links a { background: transparent; color: var(--paper); border-color: var(--paper); }
-body.on-dark .net-edges line { stroke: var(--paper); }
-body.on-dark .net-nodes circle { fill: var(--ink); stroke: var(--paper); }
-body.on-dark .net-nodes circle.lit { fill: var(--paper); }
-body.on-dark .net-nodes circle.now { fill: var(--accent); stroke: var(--accent); }
+body.on-dark .hud-menu { background: transparent; border-color: var(--paper); }
+body.on-dark .burger i { background: var(--paper); }
+body.on-dark .hud-menu:hover { background: var(--paper); }
+body.on-dark .hud-menu:hover .burger i { background: var(--ink); }
 
 /* índice */
 .toc {
@@ -338,7 +350,7 @@ main { position: relative; }
 .live-tokens { display: flex; flex-wrap: wrap; gap: 3px; margin: 0 0 22px; font-size: 11px; min-height: 18px; }
 .live-tokens span { background: var(--paper-2); padding: 1px 4px; white-space: pre; }
 .live-tokens span:nth-child(2n) { background: var(--paper-3); }
-.live-top { list-style: none; padding: 0; margin: 10px 0 18px; display: flex; flex-direction: column; gap: 4px; }
+.live-top { list-style: none; padding: 0; margin: 10px 0 18px; display: flex; flex-direction: column; gap: 4px; min-height: 236px; }
 .live-top li button {
   width: 100%; display: grid; grid-template-columns: 9em 1fr 4.2em; gap: 12px; align-items: center; text-align: left;
   border: 0; background: transparent; padding: 4px 0; cursor: pointer; font-family: var(--f-mono); font-size: 13px;
@@ -633,7 +645,6 @@ main { position: relative; }
   .display-s { font-size: 7.6vw; }
   .scroll-cue, .dive-scroll { display: none; }
   .refs-float { display: none; }
-  .hud-links a:first-child { display: none; }
   .claim { grid-template-columns: 1fr; gap: 8px; }
   .live-top li button { grid-template-columns: 7em 1fr 3.6em; }
   .hil-line { white-space: normal; }
