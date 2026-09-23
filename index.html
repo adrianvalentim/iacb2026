@@ -1,0 +1,615 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Por que nós não entendemos a IA (ainda)</title>
+<meta name="description" content="Material de apoio da palestra de Adrian Valentim na IA Conference Brasil 2026: interpretabilidade mecanicista, referências e experimentos interativos, com um modelo de linguagem de verdade rodando no seu navegador.">
+<meta name="theme-color" content="#F3EEE6">
+<meta property="og:title" content="Por que nós não entendemos a inteligência artificial (ainda)">
+<meta property="og:description" content="Interpretabilidade mecanicista: referências, artigos e experimentos interativos. IA Conference Brasil 2026 · Adrian Valentim.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://adrianvalentim.github.io/iacb2026/">
+<meta property="og:image" content="https://adrianvalentim.github.io/iacb2026/assets/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="pt_BR">
+<link rel="canonical" href="https://adrianvalentim.github.io/iacb2026/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script type="module" src="js/main.js"></script>
+</head>
+<body>
+
+<a class="skip" href="#entendemos">Pular para o conteúdo</a>
+
+<!-- ============================================================ HUD -->
+<header class="hud" aria-label="Navegação">
+  <button class="hud-logo" type="button" aria-label="Abrir o índice" aria-expanded="false" aria-controls="toc">
+    <svg viewBox="0 0 100 100" aria-hidden="true">
+      <g class="net-edges"></g><g class="net-nodes"></g>
+    </svg>
+  </button>
+  <div class="hud-where" aria-live="polite"><span class="hud-num">00</span><span class="hud-title">Início</span></div>
+  <nav class="hud-links">
+    <a href="#comecar">Começar</a>
+    <a href="#referencias">Referências</a>
+  </nav>
+</header>
+
+<div class="toc" id="toc" hidden>
+  <div class="toc-inner">
+    <p class="mono-label">Índice</p>
+    <ol class="toc-list"></ol>
+    <button class="toc-close mono-btn" type="button">Fechar ✕</button>
+  </div>
+</div>
+
+<main>
+
+<!-- ============================================================ 00 · ABERTURA -->
+<section class="hero" id="inicio" data-num="00" data-title="Início" data-module="hero">
+  <canvas class="hero-net" aria-hidden="true"></canvas>
+  <div class="hero-text">
+    <p class="mono-label hero-kicker">IA Conference Brasil · 2026</p>
+    <h1 class="hero-title">
+      <span class="t-a">Por que nós não entendemos a</span>
+      <span class="t-b">Inteligência</span>
+      <span class="t-b">Artificial</span>
+      <span class="t-c"><span class="paren">(</span><span class="ainda">ainda</span><span class="paren">)</span></span>
+    </h1>
+    <p class="hero-by">Adrian Valentim</p>
+  </div>
+  <p class="hero-note">Material de apoio da palestra: artigos, referências e alguns brinquedos. <br>Tudo aqui se mexe: passe o mouse, clique, arraste.</p>
+  <a class="scroll-cue" href="#entendemos"><span>Role</span><i></i></a>
+</section>
+
+<!-- ============================================================ 01 · ENTENDEMOS? -->
+<section class="chapter" id="entendemos" data-num="01" data-title="Entendemos?" data-module="split">
+  <header class="ch-head"><span class="ch-num">01</span><span class="ch-name">Duas frases que se ouve por aí</span></header>
+  <div class="split" role="group" aria-label="Arraste para comparar as duas afirmações">
+    <div class="split-side split-a"><p>Nós entendemos perfeitamente a inteligência artificial.</p></div>
+    <div class="split-side split-b"><p>Nós não temos a mínima ideia de como IAs fazem o que fazem.</p></div>
+    <button class="split-handle" type="button" aria-label="Arraste para os lados"><span>⟷</span></button>
+  </div>
+  <div class="resolve">
+    <div class="resolve-col">
+      <p class="resolve-big">Nós entendemos perfeitamente o <em>treinamento</em>.</p>
+      <svg class="loss" viewBox="0 0 300 120" aria-hidden="true"></svg>
+    </div>
+    <div class="resolve-col">
+      <p class="resolve-big">Mas não entendemos como a <em>rede neural resultante</em> é capaz de fazer o que faz.</p>
+      <canvas class="tangle" aria-hidden="true"></canvas>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ 02 · CULTIVADOS -->
+<section class="chapter pinned" id="cultivados" data-num="02" data-title="Cultivados" data-module="plant">
+  <div class="pin-track" style="--track: 220vh">
+    <div class="pin-stage">
+      <header class="ch-head"><span class="ch-num">02</span><span class="ch-name">Uma metáfora melhor</span></header>
+      <div class="grow-text">
+        <p class="grow-a">Não são criados,</p>
+        <p class="grow-b">mas cultivados.</p>
+      </div>
+      <canvas class="plant" aria-hidden="true"></canvas>
+      <div class="grow-foot">
+        <button class="mono-btn reseed" type="button">↻ Outra semente</button>
+        <p class="caption">Mesmas regras de crescimento. Outra semente, outra planta.</p>
+      </div>
+      <aside class="refs refs-float">
+        <a class="ref" href="https://www.darioamodei.com/post/the-urgency-of-interpretability" target="_blank" rel="noopener"><b>Amodei</b> · The Urgency of Interpretability (2025)</a>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ 03 · OS NÚMEROS -->
+<section class="chapter pinned inverse-none" id="numeros" data-num="03" data-title="Os números" data-module="dive">
+  <div class="pin-track" style="--track: 900vh">
+    <div class="pin-stage dive-stage">
+      <canvas class="dive-gl" aria-hidden="true"></canvas>
+      <canvas class="dive-2d" aria-hidden="true"></canvas>
+      <div class="dive-start" aria-hidden="true"><span>+0.13115</span></div>
+      <header class="ch-head dive-head"><span class="ch-num">03</span><span class="ch-name">Os números · <span class="mono">roneneldan/TinyStories-1M</span></span></header>
+      <div class="dive-cap" aria-live="polite">
+        <p class="dive-cap-a">Um parâmetro.</p>
+        <p class="dive-cap-b">bloco 0 · projeção query · linha 2, coluna 5</p>
+      </div>
+      <div class="dive-count">
+        <span class="mono-label">Parâmetros nesta tela</span>
+        <span class="dive-n">1</span>
+      </div>
+      <div class="dive-load" hidden>
+        <span class="mono-label">Recebendo os números de verdade</span>
+        <span class="dive-load-n">0 / 3.745.984</span>
+        <i class="dive-load-bar"><b></b></i>
+      </div>
+      <p class="dive-scroll mono-label">Role para se afastar ↓</p>
+    </div>
+  </div>
+  <div class="dive-after">
+    <p class="statement">Conhecemos cada conta. <br>Não sabemos o que ele aprendeu.</p>
+    <aside class="refs">
+      <a class="ref" href="https://huggingface.co/roneneldan/TinyStories-1M" target="_blank" rel="noopener"><b>roneneldan/TinyStories-1M</b> · o checkpoint desta página</a>
+      <a class="ref" href="https://arxiv.org/abs/2305.07759" target="_blank" rel="noopener"><b>Eldan &amp; Li</b> · TinyStories (2023)</a>
+      <a class="ref" href="https://arxiv.org/abs/2005.14165" target="_blank" rel="noopener"><b>Brown et al.</b> · GPT-3: Language Models are Few-Shot Learners (2020)</a>
+      <a class="ref" href="https://arxiv.org/abs/2507.20534" target="_blank" rel="noopener"><b>Kimi Team</b> · Kimi K2: Open Agentic Intelligence (2025)</a>
+    </aside>
+  </div>
+</section>
+
+<!-- ============================================================ 04 · O MODELO -->
+<section class="chapter" id="modelo" data-num="04" data-title="O modelo" data-module="live">
+  <header class="ch-head"><span class="ch-num">04</span><span class="ch-name">Esses números, rodando</span></header>
+  <h2 class="display display-s">Entender a arquitetura pouco ajuda a prever ou entender os parâmetros resultantes.</h2>
+
+  <div class="live">
+    <div class="live-stack" aria-label="Arquitetura do modelo, com o fluxo residual do último token">
+      <div class="stk stk-io"><span>Probabilidades</span></div>
+      <div class="stk stk-io"><span>Desembedding</span></div>
+      <div class="stk-layers"></div>
+      <div class="stk stk-io"><span>Embeddings</span><canvas class="stk-strip" data-layer="0"></canvas></div>
+      <div class="stk stk-io"><span>Tokenizer</span></div>
+    </div>
+    <div class="live-main">
+      <p class="mono-label live-badge"><i class="dot"></i> <span class="live-status">TinyStories-1M · aguardando</span></p>
+      <div class="live-text" contenteditable="true" spellcheck="false" role="textbox" aria-multiline="true" aria-label="Começo de uma história, em inglês">Once upon a time, there was a little</div>
+      <div class="live-tokens mono" aria-hidden="true"></div>
+      <p class="mono-label">Próxima palavra, segundo o modelo · clique para escolher</p>
+      <ol class="live-top"></ol>
+      <div class="live-actions">
+        <button class="mono-btn live-go" type="button">▶ Continuar sozinho</button>
+        <button class="mono-btn live-reset" type="button">↺ Recomeçar</button>
+      </div>
+      <p class="caption">O modelo de verdade, com seus 3.745.984 parâmetros, rodando no seu navegador. Ele só conhece historinhas infantis em inglês, porque só leu isso.</p>
+    </div>
+  </div>
+  <aside class="refs">
+    <a class="ref" href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener"><b>Vaswani et al.</b> · Attention Is All You Need (2017)</a>
+    <a class="ref" href="https://transformer-circuits.pub/2021/framework/index.html" target="_blank" rel="noopener"><b>Elhage et al.</b> · A Mathematical Framework for Transformer Circuits (2021)</a>
+  </aside>
+</section>
+
+<!-- ============================================================ 05 · TRÊS INTUIÇÕES -->
+<section class="chapter" id="intuicoes" data-num="05" data-title="Três intuições" data-module="stamps">
+  <header class="ch-head"><span class="ch-num">05</span><span class="ch-name">O que a arquitetura parece dizer</span></header>
+  <ul class="claims">
+    <li class="claim"><span class="claim-t">Planeja apenas uma palavra por vez.</span><a class="stamp" href="#planejamento"><span class="redact" aria-hidden="true"></span><b>→ Falso</b></a></li>
+    <li class="claim"><span class="claim-t">Não consegue distinguir algo provável de algo falso.</span><a class="stamp" href="#verdade"><span class="redact" aria-hidden="true"></span><b>→ Falso</b></a></li>
+    <li class="claim"><span class="claim-t">Não tem acesso algum ao seu próprio estado interno.</span><a class="stamp" href="#introspeccao"><span class="redact" aria-hidden="true"></span><b>→ Falso</b></a></li>
+  </ul>
+  <p class="caption">As evidências estão no fim da página. Antes, uma pergunta.</p>
+</section>
+
+<!-- ============================================================ 06 · SURPRESAS -->
+<section class="chapter" id="surpresas" data-num="06" data-title="Surpresas" data-module="quote">
+  <header class="ch-head"><span class="ch-num">06</span><span class="ch-name">A pergunta</span></header>
+  <h2 class="display display-s q-lines">
+    <span>Mas o treinamento não foi todo programado?</span>
+    <span>Como é possível que o resultado seja imprevisível?</span>
+  </h2>
+  <blockquote class="turing">
+    <p class="reveal-words">“A visão de que máquinas não podem dar origem a <em>surpresas</em> se deve, acredito eu, a uma falácia à qual filósofos e matemáticos são particularmente suscetíveis. Trata-se da suposição de que, tão logo um fato é apresentado a uma mente, todas as consequências desse fato surgem na mente simultaneamente com ele. É uma suposição muito útil em muitas circunstâncias, mas facilmente se esquece de que ela é falsa.”</p>
+    <footer>Alan Turing, 1950</footer>
+  </blockquote>
+  <aside class="refs">
+    <a class="ref" href="https://doi.org/10.1093/mind/LIX.236.433" target="_blank" rel="noopener"><b>Turing</b> · Computing Machinery and Intelligence, <i>Mind</i> (1950)</a>
+  </aside>
+</section>
+
+<!-- ============================================================ 07 · REGRA 110 -->
+<section class="chapter" id="regra110" data-num="07" data-title="Regra 110" data-module="rule110">
+  <header class="ch-head"><span class="ch-num">07</span><span class="ch-name">Regras simples</span></header>
+  <h2 class="display">Regra <span class="rule-n">110</span></h2>
+  <div class="rule-tiles" aria-label="As oito regras: clique na saída para trocá-la"></div>
+  <div class="ca-wrap"><canvas class="ca" aria-label="Autômato celular elementar evoluindo de cima para baixo"></canvas></div>
+  <div class="ca-bar">
+    <span class="mono-label">Tente:</span>
+    <button class="mono-btn" data-rule="110" type="button">110</button>
+    <button class="mono-btn" data-rule="30" type="button">30</button>
+    <button class="mono-btn" data-rule="90" type="button">90</button>
+    <button class="mono-btn" data-rule="184" type="button">184</button>
+    <button class="mono-btn ca-random" type="button">início aleatório</button>
+  </div>
+  <p class="caption">Oito regras, uma célula preta. Clique nas regras para trocá-las, ou na primeira linha para mudar o começo. A regra 110 é capaz de computação universal.</p>
+  <aside class="refs">
+    <a class="ref" href="https://www.complex-systems.com/abstracts/v15_i01_a01/" target="_blank" rel="noopener"><b>Cook</b> · Universality in Elementary Cellular Automata (2004)</a>
+    <a class="ref" href="https://www.wolframscience.com/nks/" target="_blank" rel="noopener"><b>Wolfram</b> · A New Kind of Science (2002)</a>
+  </aside>
+</section>
+
+<!-- ============================================================ 08 · JOGO DA VIDA -->
+<section class="chapter" id="vida" data-num="08" data-title="Jogo da Vida" data-module="life">
+  <header class="ch-head"><span class="ch-num">08</span><span class="ch-name">Emergência computacional</span></header>
+  <h2 class="display">Jogo da vida de Conway</h2>
+  <div class="life-rules">
+    <div class="life-rule"><canvas width="60" height="60" data-r="born"></canvas><span>3 vizinhos:<br>nasce</span></div>
+    <div class="life-rule"><canvas width="60" height="60" data-r="live"></canvas><span>2 ou 3 vizinhos:<br>continua viva</span></div>
+    <div class="life-rule"><canvas width="60" height="60" data-r="die"></canvas><span>qualquer outro caso:<br>morre</span></div>
+  </div>
+  <div class="life-wrap"><canvas class="life" aria-label="Jogo da vida: desenhe com o mouse ou o dedo"></canvas></div>
+  <div class="ca-bar">
+    <button class="mono-btn life-play" type="button">❚❚ Pausar</button>
+    <button class="mono-btn life-soup" type="button">Sopa aleatória</button>
+    <button class="mono-btn life-glider" type="button">Planador</button>
+    <button class="mono-btn life-gun" type="button">Canhão de planadores</button>
+    <button class="mono-btn life-clear" type="button">Limpar</button>
+    <label class="mono-btn life-spot"><input type="checkbox" checked> Destacar planadores</label>
+    <span class="mono-label life-stats"></span>
+  </div>
+  <p class="statement statement-s">Nenhuma linha dessas regras menciona um <em class="accent">planador</em>. <br>Mas ele está lá.</p>
+  <p class="caption">Desenhe com o mouse ou o dedo. Os planadores achados pelo detector ficam em laranja. Procurar estruturas lá dentro é, em miniatura, o trabalho da interpretabilidade.</p>
+  <aside class="refs">
+    <a class="ref" href="https://www.ibiblio.org/lifepatterns/october1970.html" target="_blank" rel="noopener"><b>Gardner</b> · The fantastic combinations of John Conway's new solitaire game “life” (1970)</a>
+    <a class="ref" href="https://plato.stanford.edu/entries/properties-emergent/" target="_blank" rel="noopener"><b>Stanford Encyclopedia</b> · Emergent Properties</a>
+    <a class="ref" href="https://doi.org/10.1111/0029-4624.31.s11.17" target="_blank" rel="noopener"><b>Bedau</b> · Weak Emergence (1997)</a>
+  </aside>
+</section>
+
+<!-- ============================================================ 09 · TURING -->
+<section class="chapter" id="turing" data-num="09" data-title="Máquina de Turing" data-module="turing">
+  <header class="ch-head"><span class="ch-num">09</span><span class="ch-name">Realmente não é previsível?</span></header>
+  <h2 class="display">Máquina de Turing</h2>
+  <div class="tm">
+    <svg class="tm-svg" viewBox="0 0 1000 300" aria-label="Uma máquina de Turing lendo e escrevendo numa fita"></svg>
+    <div class="tm-panel">
+      <div class="tm-pick" role="radiogroup" aria-label="Escolha a máquina">
+        <button class="mono-btn" data-bb="2" type="button">2 estados</button>
+        <button class="mono-btn" data-bb="3" type="button">3 estados</button>
+        <button class="mono-btn" data-bb="4" type="button">4 estados</button>
+        <button class="mono-btn" data-bb="5" type="button">5 estados</button>
+      </div>
+      <div class="tm-read">
+        <span class="mono-label">Passos</span><span class="tm-steps">0</span>
+        <span class="mono-label">Estado</span><span class="tm-state">A</span>
+        <span class="mono-label tm-verdict">vai parar?</span>
+      </div>
+      <table class="tm-table mono" aria-label="Tabela de transições"></table>
+    </div>
+  </div>
+  <div class="bb-facts">
+    <p class="statement statement-s">Computação universal implica <em>indecidibilidade</em>: não existe um método geral para saber o que um programa fará sem rodá-lo.</p>
+    <dl class="bb">
+      <div><dt>BB(4)</dt><dd>107 passos</dd></div>
+      <div><dt>BB(5)</dt><dd>47.176.870 passos · provado só em 2024</dd></div>
+      <div><dt>BB(6)</dt><dd>ninguém sabe</dd></div>
+    </dl>
+    <p class="caption">Cada máquina aqui é a campeã “castor ocupado” do seu tamanho: a que roda por mais tempo antes de parar. Descobrir quanto a de cinco estados roda levou décadas de uma colaboração aberta.</p>
+  </div>
+  <aside class="refs">
+    <a class="ref" href="https://doi.org/10.1112/plms/s2-42.1.230" target="_blank" rel="noopener"><b>Turing</b> · On Computable Numbers (1936)</a>
+    <a class="ref" href="https://en.wikipedia.org/wiki/Rice%27s_theorem" target="_blank" rel="noopener"><b>Rice</b> · o teorema de Rice (1953)</a>
+    <a class="ref" href="https://arxiv.org/abs/2509.12337" target="_blank" rel="noopener"><b>bbchallenge</b> · Determination of the fifth Busy Beaver value (2025)</a>
+    <a class="ref" href="https://bbchallenge.org/" target="_blank" rel="noopener"><b>bbchallenge.org</b></a>
+  </aside>
+</section>
+
+<!-- ============================================================ 10 · UNIVERSAL -->
+<section class="chapter" id="universal" data-num="10" data-title="Computação universal" data-module="universal">
+  <header class="ch-head"><span class="ch-num">10</span><span class="ch-name">E as redes neurais?</span></header>
+  <h2 class="display display-s">LLMs são capazes de computação universal?</h2>
+  <div class="notepad-scene" aria-label="Um transformer lendo e escrevendo num bloco de notas">
+    <svg class="np-svg" viewBox="0 0 900 360"></svg>
+  </div>
+  <p class="statement statement-s">Com um bloco de notas para ler e escrever: <em>sim</em>.</p>
+  <aside class="refs">
+    <a class="ref" href="https://arxiv.org/abs/2301.04589" target="_blank" rel="noopener"><b>Schuurmans</b> · Memory Augmented Large Language Models are Computationally Universal (2023)</a>
+    <a class="ref" href="https://arxiv.org/abs/2410.03170" target="_blank" rel="noopener"><b>Schuurmans, Dai, Zanini</b> · Autoregressive LLMs are Computationally Universal (2024)</a>
+    <a class="ref" href="https://www.jmlr.org/papers/v22/20-302.html" target="_blank" rel="noopener"><b>Pérez, Barceló, Marinkovic</b> · Attention is Turing Complete (2021)</a>
+  </aside>
+
+  <h2 class="display display-s gd-title">E o treinamento por descida do gradiente, em si?</h2>
+  <div class="gd-wrap"><canvas class="gd" aria-label="Paisagem de perda: clique para soltar uma bolinha que desce pelo gradiente"></canvas></div>
+  <p class="caption">Clique (ou toque) para soltar uma bolinha. Ela desce pelo gradiente até algum vale. Qual vale depende de onde começou.</p>
+  <aside class="refs">
+    <a class="ref" href="https://arxiv.org/abs/2007.13664" target="_blank" rel="noopener"><b>Welper</b> · Universality of Gradient Descent Neural Network Training (2020)</a>
+    <a class="ref" href="https://arxiv.org/abs/2212.07677" target="_blank" rel="noopener"><b>von Oswald et al.</b> · Transformers Learn In-Context by Gradient Descent (2023)</a>
+  </aside>
+</section>
+
+<!-- ============================================================ 11 · EMERGÊNCIA -->
+<section class="chapter" id="emergencia" data-num="11" data-title="Emergência" data-module="emergence">
+  <header class="ch-head"><span class="ch-num">11</span><span class="ch-name">Emergência em redes neurais</span></header>
+  <div class="sun-wrap"><svg class="sun" viewBox="-110 -110 220 120" aria-hidden="true"></svg></div>
+  <ol class="emerge">
+    <li>Reduzir a perplexidade num oceano de texto com relativamente poucos parâmetros <em>força</em> o modelo a desenvolver estratégias internas.</li>
+    <li>Uma propriedade é <em>emergente</em> se não dá para prevê-la olhando modelos menores, nem a arquitetura.</li>
+  </ol>
+  <div class="recap">
+    <p class="mono-label">Resumindo até aqui</p>
+    <ol>
+      <li>Programas de regras simples frequentemente têm consequências imprevisíveis.</li>
+      <li>O treinamento por descida do gradiente é um programa particularmente complicado, capaz de computação universal.</li>
+      <li>Quem conhece o treinamento perfeitamente ainda pode se surpreender com a rede que ele produz.</li>
+    </ol>
+  </div>
+  <aside class="refs">
+    <a class="ref" href="https://arxiv.org/abs/2206.07682" target="_blank" rel="noopener"><b>Wei et al.</b> · Emergent Abilities of Large Language Models (2022)</a>
+    <a class="ref" href="https://arxiv.org/abs/2304.15004" target="_blank" rel="noopener"><b>Schaeffer, Miranda, Koyejo</b> · Are Emergent Abilities of LLMs a Mirage? (2023), o contraponto</a>
+    <a class="ref" href="https://doi.org/10.1126/science.177.4047.393" target="_blank" rel="noopener"><b>Anderson</b> · More Is Different (1972)</a>
+  </aside>
+</section>
+
+<!-- ============================================================ 12 · (AINDA) -->
+<section class="chapter pinned inverse" id="ainda" data-num="12" data-title="(Ainda)" data-module="ainda">
+  <div class="pin-track" style="--track: 170vh">
+    <div class="pin-stage ainda-stage">
+      <p class="mono-label">Parte 2</p>
+      <p class="ainda-big"><span class="ap ap-l">(</span><span class="ainda-w">ainda</span><span class="ap ap-r">)</span></p>
+      <p class="ainda-sub">O que podemos fazer sobre isso?</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ 13 · MECANICISTA -->
+<section class="chapter" id="mecanicista" data-num="13" data-title="Interpretabilidade mecanicista" data-module="blackbox">
+  <header class="ch-head"><span class="ch-num">13</span><span class="ch-name">Abrir a caixa</span></header>
+  <div class="bb-box-row">
+    <div class="blackbox" aria-hidden="true">
+      <svg class="bb-circuit" viewBox="0 0 400 400"></svg>
+      <div class="bb-lid"><span>Interpretabilidade<br><b>mecanicista</b></span></div>
+    </div>
+    <div class="bb-def">
+      <p class="resolve-big">A área de pesquisa que busca entender as estruturas, algoritmos e mecanismos no interior de redes neurais.</p>
+      <p class="caption">Termo cunhado por Chris Olah por volta de 2020. A ideia é mais antiga: Rosenblatt já falava em mecanismos em 1962.</p>
+    </div>
+  </div>
+
+  <h3 class="mono-label claims3-title">Três afirmações fundamentais</h3>
+  <ol class="claims3">
+    <li><svg class="c3 c3-feature" viewBox="0 0 200 140" aria-hidden="true"></svg><b>Redutibilidade</b><span>Existem <em>features</em>: as unidades básicas de processamento de informação.</span></li>
+    <li><svg class="c3 c3-circuit" viewBox="0 0 200 140" aria-hidden="true"></svg><b>Composicionalidade</b><span>Features são combinadas por <em>circuitos</em>.</span></li>
+    <li><svg class="c3 c3-universal" viewBox="0 0 200 140" aria-hidden="true"></svg><b>Universalidade</b><span>Estruturas análogas aparecem em <em>redes diferentes</em>.</span></li>
+  </ol>
+  <aside class="refs">
+    <a class="ref" href="https://distill.pub/2020/circuits/zoom-in/" target="_blank" rel="noopener"><b>Olah et al.</b> · Zoom In: An Introduction to Circuits (2020)</a>
+    <a class="ref" href="https://arxiv.org/abs/2410.09087" target="_blank" rel="noopener"><b>Saphra &amp; Wiegreffe</b> · Mechanistic? A história do termo (2024)</a>
+    <a class="ref" href="https://archive.org/details/DTIC_AD0256582" target="_blank" rel="noopener"><b>Rosenblatt</b> · Principles of Neurodynamics (1962)</a>
+    <a class="ref" href="https://transformer-circuits.pub/" target="_blank" rel="noopener"><b>Transformer Circuits Thread</b></a>
+  </aside>
+</section>
+
+<!-- ============================================================ 14 · A UNIDADE BÁSICA -->
+<section class="chapter" id="unidade" data-num="14" data-title="A unidade básica" data-module="direction">
+  <header class="ch-head"><span class="ch-num">14</span><span class="ch-name">Neurônio ou direção?</span></header>
+  <h2 class="display">A unidade básica</h2>
+  <div class="unit">
+    <div class="unit-col unit-neuron">
+      <img class="unit-img" src="assets/img/neuronio.webp" width="520" height="924" alt="" loading="lazy">
+      <p class="mono-label">Um neurônio <span class="neu-id">…</span></p>
+      <ul class="neu-words" aria-live="polite"></ul>
+      <button class="mono-btn neu-shuffle" type="button">↻ Sortear outro neurônio</button>
+    </div>
+    <div class="unit-col unit-dir">
+      <p class="mono-label">Uma direção: “ponte”</p>
+      <div class="dir-ruler" aria-label="Palavras ordenadas pela projeção na direção ponte"></div>
+    </div>
+  </div>
+  <p class="caption unit-cap">Dados reais do TinyStories-1M, camada 3. À esquerda, as palavras que mais ativam um neurônio do MLP sorteado: às vezes há um tema, muitas vezes é uma mistura. À direita, as mesmas palavras projetadas numa única <em>direção</em> do espaço de ativações, calculada só a partir de “bridge”. Riacho, túnel, penhasco, vale: ninguém mostrou essas palavras a ela.</p>
+  <aside class="refs">
+    <a class="ref" href="https://arxiv.org/abs/1301.3781" target="_blank" rel="noopener"><b>Mikolov et al.</b> · word2vec (2013)</a>
+    <a class="ref" href="https://arxiv.org/abs/1506.02078" target="_blank" rel="noopener"><b>Karpathy et al.</b> · Visualizing and Understanding Recurrent Networks (2015)</a>
+    <a class="ref" href="https://arxiv.org/abs/1704.01444" target="_blank" rel="noopener"><b>Radford et al.</b> · o “neurônio de sentimento” (2017)</a>
+    <a class="ref" href="https://transformer-circuits.pub/2022/toy_model/index.html" target="_blank" rel="noopener"><b>Elhage et al.</b> · Toy Models of Superposition (2022)</a>
+    <a class="ref" href="https://transformer-circuits.pub/2023/monosemantic-features/index.html" target="_blank" rel="noopener"><b>Bricken et al.</b> · Towards Monosemanticity (2023)</a>
+    <a class="ref" href="https://arxiv.org/abs/2311.03658" target="_blank" rel="noopener"><b>Park, Choe, Veitch</b> · The Linear Representation Hypothesis (2023)</a>
+  </aside>
+</section>
+
+<!-- ============================================================ 15 · GOLDEN GATE -->
+<section class="chapter" id="golden-gate" data-num="15" data-title="Golden Gate" data-module="steer">
+  <header class="ch-head"><span class="ch-num">15</span><span class="ch-name">Mexendo numa direção</span></header>
+  <h2 class="display">Golden Gate Claude</h2>
+  <div class="gg-story">
+    <p class="resolve-big">Em 2024, a Anthropic achou dentro do Claude uma feature da Golden Gate Bridge, que dispara com o nome, com fotos, em outros idiomas, até com rotas que passam por ela.</p>
+    <p class="resolve-big">Com a feature forçada para cima, o Claude ficou obcecado pela ponte. Com força suficiente, passou a dizer que <em>era</em> a ponte.</p>
+  </div>
+
+  <div class="steer">
+    <svg class="gg-bridge" viewBox="0 0 1000 300" aria-hidden="true"></svg>
+    <p class="mono-label steer-title">Faça você mesmo · TinyStories-1M, ao vivo, com a direção “ponte” somada na camada 3</p>
+    <div class="steer-prompts" role="radiogroup" aria-label="Começo da história"></div>
+    <label class="steer-slider">
+      <span class="mono-label">Força</span>
+      <input type="range" min="0" max="2.4" step="0.1" value="0" aria-label="Força da direção ponte">
+      <output class="steer-val mono">0.0</output>
+    </label>
+    <p class="steer-out" aria-live="polite"><span class="steer-prompt"></span><span class="steer-gen"></span></p>
+    <p class="caption">Em laranja, palavras do universo “ponte”. Arraste devagar: primeiro a história muda de assunto; depois, perde o juízo. Decodificação gulosa, sem sorteio: o mesmo resultado sempre.</p>
+  </div>
+  <aside class="refs">
+    <a class="ref" href="https://www.anthropic.com/news/golden-gate-claude" target="_blank" rel="noopener"><b>Anthropic</b> · Golden Gate Claude (2024)</a>
+    <a class="ref" href="https://transformer-circuits.pub/2024/scaling-monosemanticity/index.html" target="_blank" rel="noopener"><b>Templeton et al.</b> · Scaling Monosemanticity (2024)</a>
+    <a class="ref" href="https://arxiv.org/abs/2308.10248" target="_blank" rel="noopener"><b>Turner et al.</b> · Steering Language Models With Activation Engineering (2023)</a>
+    <a class="ref" href="https://distill.pub/2021/multimodal-neurons/" target="_blank" rel="noopener"><b>Goh et al.</b> · Multimodal Neurons (2021)</a>
+  </aside>
+</section>
+
+<!-- ============================================================ 16 · PLANEJAMENTO -->
+<section class="chapter" id="planejamento" data-num="16" data-title="Uma palavra por vez?" data-module="poem">
+  <header class="ch-head"><span class="ch-num">16</span><span class="ch-name">Evidência 1 · Planejamento</span></header>
+  <h2 class="display">Uma palavra por vez?</h2>
+  <div class="poem" aria-live="polite">
+    <p class="poem-l poem-0 mono">A rhyming couplet:</p>
+    <p class="poem-l poem-1"><span class="typed"></span></p>
+    <p class="poem-l poem-2"><span class="typed"></span><span class="ghost"></span></p>
+    <div class="poem-plan" aria-hidden="true"><span class="mono-label">o que já está ativo no fim da linha 1</span><span class="plan-words"></span></div>
+  </div>
+  <div class="ca-bar">
+    <button class="mono-btn poem-play" type="button">▶ De novo</button>
+    <label class="mono-btn"><input type="checkbox" class="poem-suppress"> Suprimir “rabbit”</label>
+  </div>
+  <p class="caption">Antes de escrever a segunda linha, o Claude já tem ativa a palavra que vai rimar, e escreve a linha em direção a ela. Suprimida essa feature, ele replaneja e rima com outra.</p>
+  <aside class="refs">
+    <a class="ref" href="https://transformer-circuits.pub/2025/attribution-graphs/biology.html" target="_blank" rel="noopener"><b>Lindsey et al.</b> · On the Biology of a Large Language Model (2025)</a>
+    <a class="ref" href="https://transformer-circuits.pub/2025/attribution-graphs/methods.html" target="_blank" rel="noopener"><b>Ameisen et al.</b> · Circuit Tracing (2025)</a>
+    <a class="ref" href="https://www.anthropic.com/research/tracing-thoughts-language-model" target="_blank" rel="noopener"><b>Anthropic</b> · Tracing the thoughts of a large language model (2025)</a>
+  </aside>
+</section>
+
+<!-- ============================================================ 17 · VERDADE -->
+<section class="chapter" id="verdade" data-num="17" data-title="A direção da verdade" data-module="truth">
+  <header class="ch-head"><span class="ch-num">17</span><span class="ch-name">Evidência 2 · Provável não é verdadeiro</span></header>
+  <h2 class="display">A direção da verdade</h2>
+  <div class="truth-wrap">
+    <canvas class="truth" aria-label="Esquema: frases verdadeiras e falsas separadas ao longo de uma direção"></canvas>
+    <div class="truth-card" aria-live="polite"><span class="mono-label">Passe o mouse nos pontos</span><p class="truth-s"></p><p class="truth-v mono"></p></div>
+  </div>
+  <div class="ca-bar">
+    <button class="mono-btn truth-flip" type="button">⇄ Inverter a direção dentro do modelo</button>
+  </div>
+  <p class="caption">Esquema ilustrativo (os pontos não são dados do artigo). Nas ativações de modelos grandes, frases verdadeiras e falsas se separam ao longo de uma direção. Empurrar o modelo ao longo dela o faz tratar o falso como verdadeiro: é causal, não só correlação.</p>
+  <aside class="refs">
+    <a class="ref" href="https://arxiv.org/abs/2310.06824" target="_blank" rel="noopener"><b>Marks &amp; Tegmark</b> · The Geometry of Truth (2023)</a>
+    <a class="ref" href="https://arxiv.org/abs/2212.03827" target="_blank" rel="noopener"><b>Burns et al.</b> · Discovering Latent Knowledge Without Supervision (2022)</a>
+  </aside>
+</section>
+
+<!-- ============================================================ 18 · INTROSPECÇÃO -->
+<section class="chapter" id="introspeccao" data-num="18" data-title="Introspecção" data-module="introspect">
+  <header class="ch-head"><span class="ch-num">18</span><span class="ch-name">Evidência 3 · Estado interno</span></header>
+  <h2 class="display">Introspecção</h2>
+  <div class="intro-grid">
+    <div class="intro-exp">
+      <p class="mono-label">1 · Injetar um conceito</p>
+      <div class="intro-q mono">“Você percebe algum pensamento injetado? Se sim, sobre o quê?”</div>
+      <div class="intro-acts" aria-hidden="true"><canvas class="intro-strip"></canvas><span class="syringe">+ vetor “CAIXA ALTA”</span></div>
+      <div class="ca-bar"><button class="mono-btn intro-inject" type="button" aria-pressed="false">Injetar o vetor “CAIXA ALTA”</button></div>
+      <p class="intro-a" aria-live="polite"></p>
+    </div>
+    <div class="intro-exp">
+      <p class="mono-label">2 · Injeção retroativa</p>
+      <div class="intro-q mono">Forçamos a resposta “pão”, sem sentido nenhum ali. Depois perguntamos: foi de propósito?</div>
+      <div class="ca-bar"><button class="mono-btn intro-bread" type="button" aria-pressed="false">Injetar “pão” nas ativações anteriores</button></div>
+      <p class="intro-b" aria-live="polite"></p>
+    </div>
+  </div>
+  <dl class="intro-facts">
+    <div><dt>~20%</dt><dd>das vezes o Claude Opus 4.1 detecta e nomeia o conceito, no melhor caso</dd></div>
+    <div><dt>0</dt><dd>falsos positivos em 100 testes de controle, nos modelos de produção</dd></div>
+    <div><dt>antes</dt><dd>a detecção vem antes de o conceito aparecer na resposta</dd></div>
+  </dl>
+  <p class="caption">Respostas parafraseadas dos experimentos. É uma capacidade limitada e pouco confiável. E, ainda assim, existe.</p>
+  <aside class="refs">
+    <a class="ref" href="https://transformer-circuits.pub/2025/introspection/index.html" target="_blank" rel="noopener"><b>Lindsey</b> · Emergent Introspective Awareness in Large Language Models (2025)</a>
+    <a class="ref" href="https://www.anthropic.com/research/introspection" target="_blank" rel="noopener"><b>Anthropic</b> · Signs of introspection in large language models (2025)</a>
+  </aside>
+</section>
+
+<!-- ============================================================ 19 · HILBERT -->
+<section class="chapter pinned inverse" id="hilbert" data-num="19" data-title="Wir müssen wissen" data-module="hilbert">
+  <div class="pin-track" style="--track: 190vh">
+    <div class="pin-stage hilbert-stage">
+      <p class="hil-line" data-de="Wir müssen wissen." data-pt="Nós precisamos saber.">Wir müssen wissen.</p>
+      <p class="hil-line" data-de="Wir werden wissen." data-pt="Nós vamos saber.">Wir werden wissen.</p>
+      <p class="mono-label hil-by">David Hilbert, 1930</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ 20 · COMEÇAR -->
+<section class="chapter" id="comecar" data-num="20" data-title="Por onde começar" data-module="none">
+  <header class="ch-head"><span class="ch-num">20</span><span class="ch-name">Quer entrar na área?</span></header>
+  <h2 class="display">Por onde começar</h2>
+  <ol class="start">
+    <li><a href="https://www.neelnanda.io/mechanistic-interpretability/getting-started" target="_blank" rel="noopener"><b>Neel Nanda</b><span>Guia para começar em interpretabilidade mecanicista</span></a></li>
+    <li><a href="https://arena.education/" target="_blank" rel="noopener"><b>ARENA</b><span>Exercícios práticos, do transformer do zero até circuitos</span></a></li>
+    <li><a href="https://github.com/TransformerLensOrg/TransformerLens" target="_blank" rel="noopener"><b>TransformerLens</b><span>Biblioteca para abrir e cutucar modelos</span></a></li>
+    <li><a href="https://www.neuronpedia.org/" target="_blank" rel="noopener"><b>Neuronpedia</b><span>Explore features e grafos de atribuição no navegador</span></a></li>
+    <li><a href="https://github.com/safety-research/circuit-tracer" target="_blank" rel="noopener"><b>circuit-tracer</b><span>O rastreamento de circuitos da Anthropic, em código aberto</span></a></li>
+    <li><a href="https://transformer-circuits.pub/" target="_blank" rel="noopener"><b>Transformer Circuits</b><span>Os artigos, em ordem, desde 2021</span></a></li>
+    <li><a href="https://arxiv.org/abs/2501.16496" target="_blank" rel="noopener"><b>Open Problems in Mechanistic Interpretability</b><span>O mapa do que ainda não sabemos (2025)</span></a></li>
+    <li><a href="https://www.matsprogram.org/" target="_blank" rel="noopener"><b>MATS</b><span>Programa de mentoria em pesquisa</span></a></li>
+    <li><a href="https://alignment.anthropic.com/2024/anthropic-fellows-program/" target="_blank" rel="noopener"><b>Anthropic Fellows</b><span>Programa de pesquisa em segurança e interpretabilidade</span></a></li>
+  </ol>
+</section>
+
+<!-- ============================================================ REFERÊNCIAS -->
+<section class="chapter refs-all" id="referencias" data-num="✦" data-title="Referências" data-module="none">
+  <header class="ch-head"><span class="ch-num">✦</span><span class="ch-name">Tudo o que foi citado</span></header>
+  <h2 class="display">Referências</h2>
+  <div class="biblio">
+    <div class="bib-group"><h3 class="mono-label">A metáfora</h3><ul>
+      <li>Amodei, D. <i>The Urgency of Interpretability</i>, 2025. <a href="https://www.darioamodei.com/post/the-urgency-of-interpretability" target="_blank" rel="noopener">darioamodei.com</a></li>
+    </ul></div>
+    <div class="bib-group"><h3 class="mono-label">Os modelos</h3><ul>
+      <li>Eldan, R.; Li, Y. <i>TinyStories: How Small Can Language Models Be and Still Speak Coherent English?</i>, 2023. <a href="https://arxiv.org/abs/2305.07759" target="_blank" rel="noopener">arXiv:2305.07759</a> · <a href="https://huggingface.co/roneneldan/TinyStories-1M" target="_blank" rel="noopener">checkpoint</a></li>
+      <li>Vaswani, A. et al. <i>Attention Is All You Need</i>, 2017. <a href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener">arXiv:1706.03762</a></li>
+      <li>Brown, T. et al. <i>Language Models are Few-Shot Learners</i> (GPT-3), 2020. <a href="https://arxiv.org/abs/2005.14165" target="_blank" rel="noopener">arXiv:2005.14165</a></li>
+      <li>Kimi Team. <i>Kimi K2: Open Agentic Intelligence</i>, 2025. <a href="https://arxiv.org/abs/2507.20534" target="_blank" rel="noopener">arXiv:2507.20534</a></li>
+      <li>Elhage, N. et al. <i>A Mathematical Framework for Transformer Circuits</i>, 2021. <a href="https://transformer-circuits.pub/2021/framework/index.html" target="_blank" rel="noopener">transformer-circuits.pub</a></li>
+    </ul></div>
+    <div class="bib-group"><h3 class="mono-label">Computação, emergência, imprevisibilidade</h3><ul>
+      <li>Turing, A. <i>Computing Machinery and Intelligence</i>. Mind 59(236), 1950. <a href="https://doi.org/10.1093/mind/LIX.236.433" target="_blank" rel="noopener">doi</a></li>
+      <li>Turing, A. <i>On Computable Numbers, with an Application to the Entscheidungsproblem</i>, 1936. <a href="https://doi.org/10.1112/plms/s2-42.1.230" target="_blank" rel="noopener">doi</a></li>
+      <li>Rice, H. G. <i>Classes of Recursively Enumerable Sets and Their Decision Problems</i>, 1953. <a href="https://en.wikipedia.org/wiki/Rice%27s_theorem" target="_blank" rel="noopener">teorema de Rice</a></li>
+      <li>Wolfram, S. <i>A New Kind of Science</i>, 2002. <a href="https://www.wolframscience.com/nks/" target="_blank" rel="noopener">wolframscience.com</a></li>
+      <li>Cook, M. <i>Universality in Elementary Cellular Automata</i>. Complex Systems 15, 2004. <a href="https://www.complex-systems.com/abstracts/v15_i01_a01/" target="_blank" rel="noopener">complex-systems.com</a></li>
+      <li>Gardner, M. <i>Mathematical Games: The fantastic combinations of John Conway's new solitaire game “life”</i>. Scientific American, 1970. <a href="https://www.ibiblio.org/lifepatterns/october1970.html" target="_blank" rel="noopener">texto</a></li>
+      <li>Bedau, M. <i>Weak Emergence</i>. Philosophical Perspectives 11, 1997. <a href="https://doi.org/10.1111/0029-4624.31.s11.17" target="_blank" rel="noopener">doi</a></li>
+      <li>O'Connor, T. <i>Emergent Properties</i>. Stanford Encyclopedia of Philosophy. <a href="https://plato.stanford.edu/entries/properties-emergent/" target="_blank" rel="noopener">plato.stanford.edu</a></li>
+      <li>The bbchallenge Collaboration. <i>Determination of the fifth Busy Beaver value</i>, 2025. <a href="https://arxiv.org/abs/2509.12337" target="_blank" rel="noopener">arXiv:2509.12337</a></li>
+      <li>Schuurmans, D. <i>Memory Augmented Large Language Models are Computationally Universal</i>, 2023. <a href="https://arxiv.org/abs/2301.04589" target="_blank" rel="noopener">arXiv:2301.04589</a></li>
+      <li>Schuurmans, D.; Dai, H.; Zanini, F. <i>Autoregressive Large Language Models are Computationally Universal</i>, 2024. <a href="https://arxiv.org/abs/2410.03170" target="_blank" rel="noopener">arXiv:2410.03170</a></li>
+      <li>Pérez, J.; Barceló, P.; Marinkovic, J. <i>Attention is Turing Complete</i>. JMLR 22, 2021. <a href="https://www.jmlr.org/papers/v22/20-302.html" target="_blank" rel="noopener">jmlr.org</a></li>
+      <li>Welper, G. <i>Universality of Gradient Descent Neural Network Training</i>, 2020. <a href="https://arxiv.org/abs/2007.13664" target="_blank" rel="noopener">arXiv:2007.13664</a></li>
+      <li>von Oswald, J. et al. <i>Transformers Learn In-Context by Gradient Descent</i>. ICML, 2023. <a href="https://arxiv.org/abs/2212.07677" target="_blank" rel="noopener">arXiv:2212.07677</a></li>
+      <li>Wei, J. et al. <i>Emergent Abilities of Large Language Models</i>, 2022. <a href="https://arxiv.org/abs/2206.07682" target="_blank" rel="noopener">arXiv:2206.07682</a></li>
+      <li>Schaeffer, R.; Miranda, B.; Koyejo, S. <i>Are Emergent Abilities of Large Language Models a Mirage?</i>, 2023. <a href="https://arxiv.org/abs/2304.15004" target="_blank" rel="noopener">arXiv:2304.15004</a></li>
+      <li>Anderson, P. W. <i>More Is Different</i>. Science 177, 1972. <a href="https://doi.org/10.1126/science.177.4047.393" target="_blank" rel="noopener">doi</a></li>
+    </ul></div>
+    <div class="bib-group"><h3 class="mono-label">Interpretabilidade mecanicista</h3><ul>
+      <li>Rosenblatt, F. <i>Principles of Neurodynamics</i>. Spartan Books, 1962. <a href="https://archive.org/details/DTIC_AD0256582" target="_blank" rel="noopener">relatório de 1961, archive.org</a></li>
+      <li>Olah, C. et al. <i>Zoom In: An Introduction to Circuits</i>. Distill, 2020. <a href="https://distill.pub/2020/circuits/zoom-in/" target="_blank" rel="noopener">distill.pub</a></li>
+      <li>Saphra, N.; Wiegreffe, S. <i>Mechanistic?</i>, 2024. <a href="https://arxiv.org/abs/2410.09087" target="_blank" rel="noopener">arXiv:2410.09087</a></li>
+      <li>Mikolov, T. et al. <i>Efficient Estimation of Word Representations in Vector Space</i>, 2013. <a href="https://arxiv.org/abs/1301.3781" target="_blank" rel="noopener">arXiv:1301.3781</a></li>
+      <li>Karpathy, A.; Johnson, J.; Fei-Fei, L. <i>Visualizing and Understanding Recurrent Networks</i>, 2015. <a href="https://arxiv.org/abs/1506.02078" target="_blank" rel="noopener">arXiv:1506.02078</a></li>
+      <li>Radford, A.; Jozefowicz, R.; Sutskever, I. <i>Learning to Generate Reviews and Discovering Sentiment</i>, 2017. <a href="https://arxiv.org/abs/1704.01444" target="_blank" rel="noopener">arXiv:1704.01444</a></li>
+      <li>Goh, G. et al. <i>Multimodal Neurons in Artificial Neural Networks</i>. Distill, 2021. <a href="https://distill.pub/2021/multimodal-neurons/" target="_blank" rel="noopener">distill.pub</a></li>
+      <li>Elhage, N. et al. <i>Toy Models of Superposition</i>, 2022. <a href="https://transformer-circuits.pub/2022/toy_model/index.html" target="_blank" rel="noopener">transformer-circuits.pub</a></li>
+      <li>Bricken, T. et al. <i>Towards Monosemanticity</i>, 2023. <a href="https://transformer-circuits.pub/2023/monosemantic-features/index.html" target="_blank" rel="noopener">transformer-circuits.pub</a></li>
+      <li>Park, K.; Choe, Y. J.; Veitch, V. <i>The Linear Representation Hypothesis and the Geometry of Large Language Models</i>, 2023. <a href="https://arxiv.org/abs/2311.03658" target="_blank" rel="noopener">arXiv:2311.03658</a></li>
+      <li>Templeton, A. et al. <i>Scaling Monosemanticity</i>, 2024. <a href="https://transformer-circuits.pub/2024/scaling-monosemanticity/index.html" target="_blank" rel="noopener">transformer-circuits.pub</a></li>
+      <li>Anthropic. <i>Golden Gate Claude</i>, 2024. <a href="https://www.anthropic.com/news/golden-gate-claude" target="_blank" rel="noopener">anthropic.com</a></li>
+      <li>Turner, A. M. et al. <i>Steering Language Models With Activation Engineering</i>, 2023. <a href="https://arxiv.org/abs/2308.10248" target="_blank" rel="noopener">arXiv:2308.10248</a></li>
+      <li>Lindsey, J. et al. <i>On the Biology of a Large Language Model</i>, 2025. <a href="https://transformer-circuits.pub/2025/attribution-graphs/biology.html" target="_blank" rel="noopener">transformer-circuits.pub</a></li>
+      <li>Ameisen, E. et al. <i>Circuit Tracing: Revealing Computational Graphs in Language Models</i>, 2025. <a href="https://transformer-circuits.pub/2025/attribution-graphs/methods.html" target="_blank" rel="noopener">transformer-circuits.pub</a></li>
+      <li>Marks, S.; Tegmark, M. <i>The Geometry of Truth</i>, 2023. <a href="https://arxiv.org/abs/2310.06824" target="_blank" rel="noopener">arXiv:2310.06824</a></li>
+      <li>Burns, C. et al. <i>Discovering Latent Knowledge in Language Models Without Supervision</i>, 2022. <a href="https://arxiv.org/abs/2212.03827" target="_blank" rel="noopener">arXiv:2212.03827</a></li>
+      <li>Lindsey, J. <i>Emergent Introspective Awareness in Large Language Models</i>, 2025. <a href="https://transformer-circuits.pub/2025/introspection/index.html" target="_blank" rel="noopener">transformer-circuits.pub</a></li>
+      <li>Sharkey, L. et al. <i>Open Problems in Mechanistic Interpretability</i>, 2025. <a href="https://arxiv.org/abs/2501.16496" target="_blank" rel="noopener">arXiv:2501.16496</a></li>
+    </ul></div>
+    <div class="bib-group"><h3 class="mono-label">O fecho</h3><ul>
+      <li>Hilbert, D. Discurso em Königsberg, 1930, em resposta ao <i>ignoramus et ignorabimus</i>. <a href="https://pt.wikipedia.org/wiki/Ignoramus_et_ignorabimus" target="_blank" rel="noopener">Wikipédia</a></li>
+    </ul></div>
+  </div>
+
+  <div class="colophon">
+    <div class="contact">
+      <p class="mono-label">Contato</p>
+      <ul>
+        <li><a href="mailto:0xadrianvalentim@gmail.com">0xadrianvalentim@gmail.com</a></li>
+        <li><a href="https://adrianvalentim.substack.com" target="_blank" rel="noopener">Substack · @adrianvalentim</a></li>
+        <li><a href="https://adrianvalentim.com" target="_blank" rel="noopener">adrianvalentim.com</a></li>
+        <li>Redes sociais · @adrian_valentim</li>
+      </ul>
+    </div>
+    <div class="notes">
+      <p class="mono-label">Notas sobre os dados</p>
+      <p>O modelo desta página é o checkpoint real do TinyStories-1M: 3.745.984 parâmetros, conferidos um a um. Blocos e normalizações viajam em float32 exato; a tabela de embeddings, em float16, e nenhuma previsão muda por isso. A implementação em JavaScript foi conferida token a token contra a de referência.</p>
+      <p>A direção “ponte” é a média das ativações na entrada da camada 3, na posição de “bridge”, em dez frases-molde, menos a mesma média para quinze substantivos comuns. Os neurônios do capítulo 14 são os 256 do MLP da mesma camada, lidos nas mesmas frases.</p>
+      <p>Os exemplos dos capítulos 16 a 18 vêm dos artigos citados, parafraseados; o esquema do capítulo 17 é ilustrativo.</p>
+    </div>
+  </div>
+  <p class="end-mark mono-label">IA Conference Brasil · 2026 · Adrian Valentim</p>
+</section>
+
+</main>
+</body>
+</html>
