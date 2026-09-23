@@ -613,11 +613,10 @@ main { position: relative; }
 .bib-group li { font-size: 14.5px; line-height: 1.45; padding: 8px 0; border-top: 1px solid var(--rule); }
 .bib-group li i { font-style: italic; }
 .bib-group li a { font-family: var(--f-mono); font-size: 12px; color: var(--accent); text-decoration: none; border-bottom: 1px solid currentColor; }
-.colophon { display: grid; grid-template-columns: 1fr 2fr; gap: 48px; margin-top: 64px; padding-top: 28px; border-top: 2px solid var(--ink); }
+.colophon { margin-top: 64px; padding-top: 28px; border-top: 2px solid var(--ink); }
 .contact ul { list-style: none; padding: 0; margin: 12px 0 0; display: grid; gap: 6px; font-size: 16px; }
 .contact a { text-decoration: none; border-bottom: 1px solid var(--rule); }
 .contact a:hover { color: var(--accent); border-color: var(--accent); }
-.notes p { font-size: 14px; color: var(--ink-2); max-width: 70ch; margin: 10px 0 0; }
 .end-mark { margin-top: 72px; text-align: center; }
 
 /* ================================================================ responsivo */
@@ -626,7 +625,7 @@ main { position: relative; }
   .hero-text { padding-left: 0; }
   .hero-title { --tb: calc((100vw - 2 * var(--pad)) / 8.95); }
   .hero-note { right: var(--pad); bottom: 96px; }
-  .resolve, .gg-story, .intro-grid, .emerge, .bb-facts, .bb-box-row, .unit, .truth-wrap, .tm, .live, .colophon { grid-template-columns: 1fr; }
+  .resolve, .gg-story, .intro-grid, .emerge, .bb-facts, .bb-box-row, .unit, .truth-wrap, .tm, .live { grid-template-columns: 1fr; }
   .claims3, .start { grid-template-columns: 1fr; }
   .intro-facts { grid-template-columns: 1fr; }
   .rule-tiles { grid-template-columns: repeat(4, minmax(0, 1fr)); row-gap: 18px; }
